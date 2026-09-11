@@ -1,5 +1,5 @@
 from visualizer import AirfoilVisualizer
-from calculatuion import four_digit_airfoil_calculation
+from calculation import four_digit_airfoil_calculation
 
 class Airfoil:
     def __init__(self, camber=0.04, Xcamber=0.4, thickness=0.15, a=0.29690, b=0.126, c=0.3516, d=0.2843, e=0.10150):
@@ -13,7 +13,7 @@ class Airfoil:
         self.d = d
         self.e = e
     
-    def calculate(self):
+    def calculate(self, N=100):
             return four_digit_airfoil_calculation(self.camber, 
                                self.Xcamber, 
                                self.thickness, 
@@ -22,7 +22,7 @@ class Airfoil:
                                self.c, 
                                self.d,
                                self.e,
-                               N=100)
+                               N)
     
     def safe(self, event):
         name = 'NACA' + str(int(self.camber * 100)) + str(int(self.Xcamber * 10)) + str(int(self.thickness* 100))
@@ -36,10 +36,9 @@ class Airfoil:
 
             for point in lower:
                 f.write(f'{point[0]} {point[1]}\n')
-        print(f'Точки данного профиля сохранены по {path}')
+        print(f'Точки данного профиля сохранены в {path}')
     
-        
-airfoil = Airfoil()
 
-visualizer = AirfoilVisualizer(airfoil)
-visualizer.show_with_sliders()
+
+if __name__ == '__main__':
+    print('Running airfoil')

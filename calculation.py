@@ -41,5 +41,13 @@ def four_digit_airfoil_calculation(camber, Xcamber, thickness, a, b, c, d, e, N)
     return upper_surface_points, lower_surface_points, mean_line
     
 
+def five_digit_airfoil_calculation():
+    pass
+
+
+
 if __name__ == '__main__':
     print('Running calculation.py')
+    
+    
+    
