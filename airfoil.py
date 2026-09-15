@@ -2,7 +2,7 @@ from visualizer import AirfoilVisualizer
 from calculation import four_digit_airfoil_calculation
 
 class Airfoil:
-    def __init__(self, camber=0.04, Xcamber=0.4, thickness=0.15, a=0.29690, b=0.126, c=0.3516, d=0.2843, e=0.10150):
+    def __init__(self, camber=0.04, Xcamber=0.4, thickness=0.12, a=0.29690, b=0.126, c=0.3516, d=0.2843, e=0.10150):
         
         self.camber: float = camber # camber - выпуклость 0 : 0.1
         self.Xcamber: float = Xcamber # Xcamber - координата с максимальным Y для кривой выпуклости 0:1

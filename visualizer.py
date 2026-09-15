@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button
+import numpy as np
+from aerodynamic.PanelMethod import create_panels, solve_panel_method
 
 
 class AirfoilVisualizer:
@@ -173,9 +175,69 @@ class AirfoilVisualizer:
         slider_d.on_changed(update)
         slider_e.on_changed(update)
         
-
         plt.show()
 
+
+def plot_cp(airfoil, alpha):
+    
+    alpha = alpha * np.pi / 180
+    upper_points, lower_points, _ = airfoil.calculate()
+    points = ([lower_points[-1]] + lower_points[-2::-1] + upper_points[1:])
+    
+    panels, control_points = create_panels(points)
+    cp = solve_panel_method(airfoil)
+    
+    m = len(cp)
+    mid = m // 2
+
+    lower = np.argsort(control_points[:mid, 0])
+    upper = np.argsort(control_points[mid:, 0])
+
+    x_lower = control_points[:mid, 0][lower]
+    cp_lower = cp[:mid][lower]
+
+    x_upper = control_points[mid:, 0][upper]
+    cp_upper = cp[mid:][upper]
+
+    fig, (ax1, ax2) = plt.subplots(
+        2, 1,
+        figsize=(10, 8)
+    )
+
+    # Cp
+    ax1.plot(x_lower, cp_lower, "-.", label="Lower surface")
+    ax1.plot(x_upper, cp_upper, "-.", label="Upper surface")
+
+    ax1.invert_yaxis()
+    ax1.set_xlabel("$x/c$")
+    ax1.set_ylabel("$C_p$")
+    ax1.set_title("Pressure coefficient distribution")
+    ax1.grid()
+    ax1.legend()
+
+    # Airfoil
+    for panel in panels:
+        ax2.plot(
+            [panel[0], panel[2]],
+            [panel[1], panel[3]],
+            "-"
+        )
+
+    ax2.scatter(
+        control_points[:, 0],
+        control_points[:, 1],
+        s=8
+    )
+
+    ax2.set_xlabel("$x/c$")
+    ax2.set_ylabel("$y/c$")
+    ax2.set_title("Airfoil")
+    ax2.axis("equal")
+    ax2.grid()
+
+    plt.tight_layout()
+    plt.show()
+    
 
 if __name__ == '__main__':
     print('vizualization function RUN')

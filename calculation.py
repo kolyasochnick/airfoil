@@ -8,7 +8,7 @@ def four_digit_airfoil_calculation(camber, Xcamber, thickness, a, b, c, d, e, N)
     mean_line = []
     for i in range(1, N + 1):
         angle_of_sector = pi / (2 * (N - 1))
-        current_Xpoint = 1 - cos((i - 1) * angle_of_sector)
+        current_Xpoint = (1 - cos((i - 1) * angle_of_sector))
 
         thickness_value = 5 * thickness * (a * current_Xpoint ** 0.5 -
                                                         b * current_Xpoint -
@@ -33,8 +33,8 @@ def four_digit_airfoil_calculation(camber, Xcamber, thickness, a, b, c, d, e, N)
         lower_surface_X = current_Xpoint + thickness_value * sin(ordinate_rotation_angle)
         lower_surface_Y = Y_of_mean_line - thickness_value * cos(ordinate_rotation_angle)
 
-        upper_surface_points.append((round(upper_surface_X, 4), round(upper_surface_Y, 4)))
-        lower_surface_points.append((round(lower_surface_X, 4), round(lower_surface_Y, 4)))
+        upper_surface_points.append((upper_surface_X, upper_surface_Y))
+        lower_surface_points.append((lower_surface_X, lower_surface_Y))
         
         mean_line.append((current_Xpoint, Y_of_mean_line))
             
